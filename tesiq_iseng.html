@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="new">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#04050a">
+    <meta name="color-scheme" content="dark">
+    <title>Test IQ Logika — N.E.W</title>
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2304050a'/%3E%3Ctext x='32' y='45' font-family='Arial Black,Arial' font-size='34' font-weight='900' text-anchor='middle' fill='%2300eaff'%3EIQ%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+    /* ============================================================
+       N.E.W — DEFAULT THEME  (dipakai ulang dari new.html)
+       ============================================================ */
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    :root{
+      /* Palet utama */
+      --cyan:#00eaff;
+      --magenta:#ff2bd6;
+      --violet:#9d4bff;
+      --gold:#ffcc4d;
+
+      /* Permukaan */
+      --bg:#04050a;
+      --surface:rgba(255,255,255,.045);
+      --border:rgba(255,255,255,.11);
+
+      /* Teks */
+      --text:#e9edff;
+      --muted:#9aa3c7;
+      --dim:#5c6a94;
+
+      /* Bentuk & gerak */
+      --radius:26px;
+      --radius-sm:16px;
+      --radius-pill:100px;
+      --ease:cubic-bezier(.2,.8,.2,1);
+
+      color-scheme:dark;
+    }
+    body{
+      font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+      min-height:100vh;
+      line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+    ::selection{background:var(--magenta);color:#fff}
+    :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+
+    ::-webkit-scrollbar{width:10px}
+    ::-webkit-scrollbar-track{background:#070912}
+    ::-webkit-scrollbar-thumb{
+      background:linear-gradient(180deg,var(--cyan),var(--violet),var(--magenta));
+      border-radius:10px;
+      border:2px solid #070912;
+    }
+
+    /* ============ BACKGROUND LAYERS ============ */
+    .bg{
+      position:fixed;inset:0;z-index:-3;overflow:hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, #0d1030 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 100% 100%, #1a0730 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 0% 80%, #001f2e 0%, transparent 60%),
+        var(--bg);
+    }
+    .bg::after{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,.75) 100%);
+      pointer-events:none;
+    }
+    .orb{
+      position:absolute;border-radius:50%;
+      filter:blur(90px);
+      opacity:.55;
+      will-change:transform;
+    }
+    .orb1{width:520px;height:520px;background:radial-gradient(circle,var(--cyan),transparent 70%);top:-140px;left:-120px;animation:orbFloat1 22s ease-in-out infinite}
+    .orb2{width:600px;height:600px;background:radial-gradient(circle,var(--magenta),transparent 70%);bottom:-200px;right:-160px;animation:orbFloat2 26s ease-in-out infinite}
+    .orb3{width:460px;height:460px;background:radial-gradient(circle,var(--violet),transparent 70%);top:40%;left:45%;animation:orbFloat3 30s ease-in-out infinite}
+    @keyframes orbFloat1{
+      0%,100%{transform:translate(0,0) scale(1)}
+      33%{transform:translate(120px,90px) scale(1.15)}
+      66%{transform:translate(40px,180px) scale(.92)}
+    }
+    @keyframes orbFloat2{
+      0%,100%{transform:translate(0,0) scale(1)}
+      33%{transform:translate(-140px,-80px) scale(1.12)}
+      66%{transform:translate(-60px,-200px) scale(.9)}
+    }
+    @keyframes orbFloat3{
+      0%,100%{transform:translate(-50%,-50%) scale(1)}
+      50%{transform:translate(-30%,-70%) scale(1.25)}
+    }
+    .grid-plane{
+      position:absolute;
+      left:-50%;right:-50%;bottom:-12%;height:70%;
+      background-image:
+        linear-gradient(rgba(0,234,255,.16) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(157,75,255,.16) 1px,transparent 1px);
+      background-size:64px 64px;
+      transform:perspective(420px) rotateX(72deg);
+      transform-origin:center bottom;
+      animation:gridMove 4.5s linear infinite;
+      -webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.5) 45%,transparent 85%);
+      mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.5) 45%,transparent 85%);
+      opacity:.7;
+    }
+    @keyframes gridMove{
+      from{background-position:0 0,0 0}
+      to{background-position:0 64px,64px 0}
+    }
+    .noise{
+      position:absolute;inset:0;opacity:.035;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    #particles{position:fixed;inset:0;z-index:-2;pointer-events:none}
+    .cursor-glow{
+      position:fixed;width:420px;height:420px;border-radius:50%;
+      pointer-events:none;z-index:0;
+      background:radial-gradient(circle,rgba(0,234,255,.09),transparent 65%);
+      transform:translate(-50%,-50%);
+      transition:opacity .4s;
+      mix-blend-mode:screen;
+    }
+
+    /* ============ PROGRESS BAR (scroll) ============ */
+    .progress{
+      position:fixed;top:0;left:0;height:3px;width:0%;z-index:100;
+      background:linear-gradient(90deg,var(--cyan),var(--violet),var(--magenta));
+      box-shadow:0 0 14px var(--cyan),0 0 30px var(--violet);
+      transition:width .1s linear;
+    }
+
+    /* ============ HEADER ============ */
+    .header{
+      width:100%;
+      padding:16px 5vw;
+      display:flex;align-items:center;justify-content:space-between;
+      position:sticky;top:0;z-index:90;
+      background:rgba(8,10,22,.55);
+      backdrop-filter:blur(20px) saturate(160%);
+      -webkit-backdrop-filter:blur(20px) saturate(160%);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      box-shadow:0 10px 40px rgba(0,0,0,.5);
+    }
+    .header-left{display:flex;align-items:center;gap:14px}
+    .header-icon{
+      width:44px;height:44px;
+      display:grid;place-items:center;
+      border-radius:14px;
+      font-size:1.15rem;
+      color:#fff;
+      background:linear-gradient(145deg,rgba(0,234,255,.22),rgba(157,75,255,.08));
+      border:1px solid rgba(0,234,255,.4);
+      box-shadow:0 0 26px rgba(0,234,255,.35),inset 0 1px 0 rgba(255,255,255,.2);
+      text-shadow:0 0 14px var(--cyan);
+    }
+    .header-title{
+      font-family:'Orbitron',sans-serif;
+      font-size:1.05rem;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#fff;
+      text-shadow:0 0 10px var(--cyan),0 0 28px rgba(0,234,255,.6);
+    }
+    .exit-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 18px;
+      border-radius:var(--radius-pill);
+      font-family:inherit;font-size:.75rem;font-weight:700;
+      letter-spacing:.16em;text-transform:uppercase;
+      color:#e9edff;cursor:pointer;
+      background:var(--surface);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+      transition:all .35s var(--ease);
+    }
+    .exit-btn:hover{
+      transform:translateY(-2px);
+      color:#fff;
+      border-color:rgba(255,43,214,.6);
+      box-shadow:0 0 30px rgba(255,43,214,.4),inset 0 1px 0 rgba(255,255,255,.2);
+    }
+
+    /* ============ LAYOUT ============ */
+    .container{
+      position:relative;z-index:1;
+      max-width:820px;
+      width:94%;
+      margin:34px 0;
+      padding:36px 34px;
+      flex-grow:1;
+    }
+
+    /* ============ GLASS CARD ============ */
+    .glass{
+      position:relative;
+      background:linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      backdrop-filter:blur(22px) saturate(160%);
+      -webkit-backdrop-filter:blur(22px) saturate(160%);
+      box-shadow:
+        0 24px 60px rgba(0,0,0,.62),
+        0 0 0 1px rgba(255,255,255,.03) inset,
+        inset 0 1px 0 rgba(255,255,255,.16);
+      overflow:hidden;
+    }
+    .glass::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),
+        rgba(0,234,255,.14),transparent 62%);
+      opacity:0;transition:opacity .45s;pointer-events:none;
+    }
+    .glass:hover::before{opacity:1}
+
+    /* ============ HEADINGS ============ */
+    h1{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(1.4rem,3.6vw,2rem);
+      font-weight:900;
+      line-height:1.2;
+      letter-spacing:.06em;
+      text-align:center;
+      color:#fff;
+      text-shadow:0 0 24px rgba(157,75,255,.55),0 0 60px rgba(157,75,255,.3);
+      margin-bottom:22px;
+    }
+    h1 .ico{
+      color:var(--cyan);
+      text-shadow:0 0 14px var(--cyan),0 0 34px var(--cyan);
+      margin-right:8px;
+    }
+    h2{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(1rem,2.4vw,1.3rem);
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      text-align:center;
+      color:#fff;
+      text-shadow:0 0 20px rgba(0,234,255,.6);
+      margin:18px 0 22px;
+    }
+
+    /* ============ SCREENS ============ */
+    .intro-screen,.question-screen,.result-screen,.answers-screen{
+      display:flex;flex-direction:column;align-items:center;
+      animation:fadeUp .6s var(--ease) both;
+    }
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(24px)}
+      to{opacity:1;transform:none}
+    }
+    .hidden{display:none}
+
+    /* ============ FORM ============ */
+    .form-group{width:100%;margin-bottom:22px}
+    label{
+      display:block;margin-bottom:10px;
+      font-size:.72rem;font-weight:700;
+      letter-spacing:.28em;text-transform:uppercase;
+      color:var(--muted);
+    }
+    label i{color:var(--cyan);text-shadow:0 0 10px var(--cyan);margin-right:8px}
+
+    input,select{
+      width:100%;
+      padding:15px 18px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--radius-sm);
+      font-family:inherit;
+      font-size:.98rem;font-weight:500;
+      color:#fff;
+      transition:all .3s var(--ease);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+    }
+    input::placeholder{color:rgba(154,163,199,.7)}
+    input:focus,select:focus{
+      outline:none;
+      background:rgba(255,255,255,.09);
+      border-color:rgba(0,234,255,.6);
+      box-shadow:0 0 0 3px rgba(0,234,255,.16),0 0 24px rgba(0,234,255,.28);
+    }
+    select{
+      appearance:none;
+      -webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%2300eaff' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;
+      background-position:right 18px center;
+      background-size:12px;
+      padding-right:44px;
+      cursor:pointer;
+    }
+    select option{background:#0a0d1c;color:#fff}
+
+    /* ============ BUTTONS ============ */
+    button{
+      position:relative;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:15px 34px;
+      border-radius:var(--radius-pill);
+      font-family:inherit;
+      font-size:.8rem;font-weight:700;
+      letter-spacing:.16em;text-transform:uppercase;
+      cursor:pointer;border:none;
+      transition:all .4s var(--ease);
+      overflow:hidden;
+    }
+    button::after{
+      content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+      transform:skewX(-22deg);
+      transition:left .7s ease;
+      pointer-events:none;
+    }
+    button:hover::after{left:160%}
+
+    /* Tombol utama */
+    button:not(.exit-btn):not(.btn-answers):not(.btn-whatsapp):not(.back-to-results){
+      color:#04121a;
+      background:linear-gradient(135deg,var(--cyan),#7ef9ff);
+      box-shadow:0 0 24px rgba(0,234,255,.5),0 10px 40px rgba(0,234,255,.28);
+    }
+    button:not(.exit-btn):not(.btn-answers):not(.btn-whatsapp):not(.back-to-results):hover{
+      transform:translateY(-4px) scale(1.03);
+      box-shadow:0 0 46px rgba(0,234,255,.85),0 18px 60px rgba(0,234,255,.4);
+    }
+
+    /* Tombol review jawaban */
+    .btn-answers{
+      color:#fff;
+      background:linear-gradient(135deg,rgba(255,43,214,.9),rgba(157,75,255,.9));
+      box-shadow:0 0 24px rgba(255,43,214,.45),0 10px 40px rgba(157,75,255,.28);
+    }
+    .btn-answers:hover{
+      transform:translateY(-4px) scale(1.03);
+      box-shadow:0 0 46px rgba(255,43,214,.8),0 18px 60px rgba(157,75,255,.45);
+    }
+
+    /* Tombol WhatsApp (tema hijau, tetap dalam bahasa visual glass) */
+    .btn-whatsapp{
+      color:#eafff3;
+      background:linear-gradient(135deg,rgba(37,211,102,.85),rgba(31,186,87,.75));
+      border:1px solid rgba(37,211,102,.5);
+      box-shadow:0 0 24px rgba(37,211,102,.35),0 10px 40px rgba(37,211,102,.2);
+    }
+    .btn-whatsapp:hover{
+      transform:translateY(-4px) scale(1.03);
+      box-shadow:0 0 46px rgba(37,211,102,.7),0 18px 60px rgba(37,211,102,.35);
+    }
+
+    /* Tombol kembali */
+    .back-to-results{
+      margin-top:26px;
+      color:#e9edff;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+    }
+    .back-to-results:hover{
+      transform:translateY(-3px);
+      border-color:rgba(0,234,255,.6);
+      box-shadow:0 0 32px rgba(0,234,255,.35),inset 0 1px 0 rgba(255,255,255,.2);
+    }
+
+    .button-group{
+      display:flex;gap:14px;flex-wrap:wrap;justify-content:center;
+      margin-top:26px;width:100%;
+    }
+    .button-group button{flex:1;min-width:190px}
+    @media (max-width:600px){
+      .button-group{flex-direction:column}
+      .button-group button{width:100%}
+    }
+
+    /* ============ TIMER ============ */
+    .timer{
+      position:absolute;top:22px;right:22px;
+      padding:10px 20px;
+      border-radius:var(--radius-pill);
+      font-family:'Orbitron',sans-serif;
+      font-size:.95rem;font-weight:700;letter-spacing:.14em;
+      color:#fff;
+      background:rgba(8,10,22,.75);
+      border:1px solid rgba(0,234,255,.35);
+      box-shadow:0 0 22px rgba(0,234,255,.28),inset 0 1px 0 rgba(255,255,255,.12);
+      text-shadow:0 0 10px var(--cyan);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+
+    /* ============ PROGRESS (pertanyaan) ============ */
+    .progress-container{
+      width:100%;
+      height:10px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:var(--radius-pill);
+      margin:18px 0 30px;
+      overflow:hidden;
+    }
+    .progress-bar{
+      height:100%;width:0%;
+      border-radius:var(--radius-pill);
+      background:linear-gradient(90deg,var(--cyan),var(--violet),var(--magenta));
+      box-shadow:0 0 18px var(--cyan),0 0 34px rgba(157,75,255,.6);
+      transition:width .5s var(--ease);
+    }
+
+    /* ============ QUESTION ============ */
+    .question{
+      font-size:clamp(1.02rem,2.2vw,1.25rem);
+      font-weight:500;
+      text-align:center;
+      line-height:1.6;
+      color:#fff;
+      margin-bottom:30px;
+      text-shadow:0 0 22px rgba(157,75,255,.35);
+    }
+
+    /* ============ OPTIONS ============ */
+    .options{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      width:100%;
+    }
+    @media (max-width:600px){.options{grid-template-columns:1fr}}
+
+    .option{
+      position:relative;
+      padding:20px 22px;
+      border-radius:var(--radius-sm);
+      text-align:center;
+      font-weight:500;
+      font-size:.95rem;
+      color:var(--text);
+      cursor:pointer;
+      background:linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.1);
+      transition:all .35s var(--ease);
+      overflow:hidden;
+    }
+    .option::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),
+        rgba(0,234,255,.18),transparent 62%);
+      opacity:0;transition:opacity .4s;pointer-events:none;
+    }
+    .option:hover{
+      transform:translateY(-4px);
+      border-color:rgba(0,234,255,.45);
+      box-shadow:0 12px 34px rgba(0,0,0,.45),0 0 34px rgba(0,234,255,.28),inset 0 1px 0 rgba(255,255,255,.18);
+    }
+    .option:hover::before{opacity:1}
+
+    .option.selected{
+      color:#04121a;
+      font-weight:700;
+      background:linear-gradient(135deg,var(--cyan),#7ef9ff);
+      border-color:rgba(0,234,255,.9);
+      box-shadow:0 0 40px rgba(0,234,255,.7),0 12px 40px rgba(0,234,255,.35),inset 0 1px 0 rgba(255,255,255,.4);
+      transform:translateY(-4px) scale(1.02);
+    }
+
+    /* ============ RESULT ============ */
+    .result-container{text-align:center;width:100%}
+
+    .animation-container{
+      width:180px;height:180px;margin:6px auto 10px;position:relative;
+    }
+    .character{
+      width:100%;height:100%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:100px;line-height:1;
+      filter:drop-shadow(0 0 24px rgba(0,234,255,.5)) drop-shadow(0 0 60px rgba(157,75,255,.35));
+      animation:bounce 2s infinite,float 6s ease-in-out infinite;
+    }
+    @keyframes bounce{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-18px)}
+    }
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-14px)}
+    }
+
+    .iq-score{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(3.6rem,12vw,5.4rem);
+      font-weight:900;
+      line-height:1;
+      margin:14px 0 20px;
+      background:linear-gradient(120deg,var(--cyan),var(--violet) 50%,var(--magenta));
+      -webkit-background-clip:text;background-clip:text;
+      -webkit-text-fill-color:transparent;color:transparent;
+      filter:drop-shadow(0 0 26px rgba(157,75,255,.75)) drop-shadow(0 0 60px rgba(0,234,255,.4));
+      animation:pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.05)}
+    }
+
+    .result-message{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(.95rem,2.6vw,1.25rem);
+      font-weight:700;
+      line-height:1.5;
+      color:#fff;
+      margin-bottom:26px;
+      text-shadow:0 0 22px rgba(0,234,255,.6),0 0 50px rgba(157,75,255,.4);
+    }
+
+    .result-details{
+      text-align:left;
+      margin:24px 0;
+      padding:24px 26px;
+      border-radius:var(--radius-sm);
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.11);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.1);
+    }
+    .result-details p{
+      margin-bottom:14px;
+      line-height:1.65;
+      color:var(--muted);
+      font-size:.94rem;
+    }
+    .result-details p:last-child{margin-bottom:0}
+    .result-details p strong{color:#fff}
+
+    .gender-ratio{
+      font-style:italic;
+      color:var(--dim) !important;
+      font-size:.86rem !important;
+    }
+
+    /* ============ ANSWERS REVIEW ============ */
+    .answer-item{
+      width:100%;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:var(--radius-sm);
+      padding:22px 24px;
+      margin-bottom:18px;
+      text-align:left;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+      transition:border-color .3s,box-shadow .3s;
+    }
+    .answer-item:hover{
+      border-color:rgba(0,234,255,.35);
+      box-shadow:0 0 30px rgba(0,234,255,.18),inset 0 1px 0 rgba(255,255,255,.12);
+    }
+    .answer-question{
+      font-weight:600;
+      color:#fff;
+      font-size:1rem;
+      line-height:1.5;
+      margin-bottom:12px;
+      text-shadow:0 0 18px rgba(157,75,255,.3);
+    }
+    .answer-user{color:var(--magenta);margin:6px 0;font-size:.9rem;font-weight:500}
+    .answer-correct{color:#4ade80;margin:6px 0;font-size:.9rem;font-weight:600;text-shadow:0 0 14px rgba(74,222,128,.5)}
+    .answer-explanation{
+      margin-top:12px;
+      padding-top:12px;
+      border-top:1px dashed rgba(255,255,255,.12);
+      color:var(--muted);
+      font-size:.88rem;
+      line-height:1.6;
+    }
+
+    /* ============ NOTE ============ */
+    .note{
+      margin-top:26px;
+      font-size:.82rem;
+      color:var(--dim);
+      text-align:center;
+      font-style:italic;
+      line-height:1.6;
+      max-width:560px;
+    }
+    .note i{color:var(--cyan);margin-right:5px}
+
+    /* ============ CONFETTI ============ */
+    .confetti{
+      position:absolute;
+      width:10px;height:10px;
+      border-radius:2px;
+      opacity:0;
+      animation:confetti 3s linear forwards;
+      pointer-events:none;
+    }
+    @keyframes confetti{
+      0%{transform:translateY(0) rotate(0deg);opacity:1}
+      100%{transform:translateY(500px) rotate(360deg);opacity:0}
+    }
+
+    /* ============ FOOTER ============ */
+    .footer{
+      width:100%;
+      padding:26px 5vw;
+      text-align:center;
+      font-size:.78rem;
+      letter-spacing:.06em;
+      color:var(--dim);
+      border-top:1px solid rgba(255,255,255,.07);
+      background:linear-gradient(180deg,transparent,rgba(0,234,255,.035));
+      position:relative;z-index:1;
+    }
+    .footer span{color:var(--cyan);text-shadow:0 0 10px var(--cyan)}
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width:600px){
+      .container{padding:26px 20px;margin:22px 0}
+      .timer{position:static;margin:0 auto 16px;display:inline-block}
+      .header-title{font-size:.85rem;letter-spacing:.12em}
+      .header-icon{width:38px;height:38px;font-size:1rem}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{animation:none!important;transition-duration:.01ms!important}
+      html{scroll-behavior:auto}
+    }
+    </style>
+</head>
+<body>
+
+<!-- ===== BACKGROUND ===== -->
+<div class="bg" aria-hidden="true">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="grid-plane"></div>
+  <div class="noise"></div>
+</div>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- ===== SCROLL PROGRESS ===== -->
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <div class="header-left">
+        <div class="header-icon"><i class="fas fa-brain"></i></div>
+        <div class="header-title">Test IQ Logika</div>
+    </div>
+    <button class="exit-btn" id="exitBtn">
+        <i class="fas fa-sign-out-alt"></i> Keluar
+    </button>
+</div>
+
+<!-- ===== CONTAINER ===== -->
+<div class="container glass" id="mainContainer">
+    <div class="intro-screen" id="introScreen">
+        <h1><i class="fas fa-brain ico"></i>Test IQ Logika</h1>
+        <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i>Nama</label>
+            <input type="text" id="name" placeholder="Masukkan nama Anda">
+        </div>
+        <div class="form-group">
+            <label for="age"><i class="fas fa-birthday-cake"></i>Usia</label>
+            <input type="number" id="age" placeholder="Masukkan usia Anda" min="5" max="120">
+        </div>
+        <div class="form-group">
+            <label for="gender"><i class="fas fa-venus-mars"></i>Jenis Kelamin</label>
+            <select id="gender">
+                <option value="male">Laki-laki</option>
+                <option value="female">Perempuan</option>
+                <option value="other">Lainnya</option>
+            </select>
+        </div>
+        <button id="startTest">
+            <i class="fas fa-play"></i> Mulai Test
+        </button>
+        <div class="note">
+            <i class="fas fa-info-circle"></i>
+            Test ini terdiri dari 20 pertanyaan logika acak dari 40 pertanyaan yang tersedia. Waktu pengerjaan akan dicatat.
+        </div>
+    </div>
+
+    <div class="question-screen hidden" id="questionScreen">
+        <div class="timer" id="timer">00:00</div>
+        <h1><i class="fas fa-question-circle ico"></i>Test IQ Logika</h1>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+    </div>
+
+    <div class="result-screen hidden" id="resultScreen">
+        <h1><i class="fas fa-chart-line ico"></i>Hasil Test IQ Logika</h1>
+        <div class="result-container">
+            <div id="resultAnimation" class="animation-container">
+                <div class="character" id="character"></div>
+            </div>
+            <div class="iq-score" id="iqScore">0</div>
+            <div class="result-message" id="resultMessage"></div>
+            <div class="result-details">
+                <p id="userDetails"></p>
+                <p id="timeTaken"></p>
+                <p id="ageAdjusted"></p>
+                <p id="genderRatio" class="gender-ratio"></p>
+            </div>
+
+            <div class="button-group">
+                <button id="restartTest"><i class="fas fa-redo"></i> Ulangi Test</button>
+                <button id="viewAnswers" class="btn-answers"><i class="fas fa-check-circle"></i> Lihat Jawaban</button>
+                <button id="shareWhatsApp" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp</button>
+                <button id="shareStatus" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Jadikan Status</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="answers-screen hidden" id="answersScreen">
+        <h1><i class="fas fa-check-circle ico" style="color:var(--magenta);text-shadow:0 0 14px var(--magenta),0 0 34px var(--magenta)"></i>Jawaban Benar</h1>
+        <h2>Review Jawaban Anda</h2>
+
+        <div id="answersList" style="width:100%"></div>
+
+        <button id="backToResults" class="back-to-results">
+            <i class="fas fa-arrow-left"></i> Kembali ke Hasil
+        </button>
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+    &copy; <span id="year"></span> Test IQ Logika <span>·</span> Aplikasi ini hanya untuk hiburan dan tidak menggantikan penilaian profesional
+</div>
+
+<audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+<audio id="wrongSound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
+<audio id="completionSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+<audio id="excellentSound" src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3"></audio>
+<audio id="goodSound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3"></audio>
+<audio id="averageSound" src="https://assets.mixkit.co/sfx/preview/mixkit-retro-arcade-casino-notification-211.mp3"></audio>
+
+<script>
+/* ============================================================
+   THEME EFFECTS (dari new.html)
+   ============================================================ */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------- Scroll progress ---------- */
+const progress = document.getElementById('progress');
+function onScroll(){
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  const scrolled = max > 0 ? (h.scrollTop / max) * 100 : 0;
+  progress.style.width = scrolled + '%';
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ---------- Cursor glow ---------- */
+const glow = document.getElementById('cursorGlow');
+const fine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+if(fine){
+  let gx = innerWidth/2, gy = innerHeight/2, cx = gx, cy = gy;
+  window.addEventListener('mousemove', e=>{ gx = e.clientX; gy = e.clientY; });
+  (function loopGlow(){
+    cx += (gx - cx) * .08;
+    cy += (gy - cy) * .08;
+    glow.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loopGlow);
+  })();
+} else {
+  glow.style.display = 'none';
+}
+
+/* ---------- Orb parallax ---------- */
+const orbs = document.querySelectorAll('.orb');
+if(fine){
+  window.addEventListener('mousemove', e=>{
+    const x = (e.clientX / innerWidth - .5);
+    const y = (e.clientY / innerHeight - .5);
+    orbs.forEach((o,i)=>{
+      const depth = (i + 1) * 14;
+      o.style.marginLeft = (x * depth) + 'px';
+      o.style.marginTop  = (y * depth) + 'px';
+    });
+  }, {passive:true});
+}
+
+/* ---------- Particle canvas ---------- */
+(function(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  const COLORS = ['0,234,255', '255,43,214', '157,75,255', '255,255,255'];
+  const COUNT = window.innerWidth < 768 ? 26 : 56;
+  let running = true;
+
+  function resize(){
+    w = canvas.width  = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  function createParticle(){
+    return {
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.7 + .5,
+      vx: (Math.random() - .5) * .28,
+      vy: (Math.random() - .5) * .28 - .12,
+      a: Math.random() * .5 + .18,
+      c: COLORS[Math.floor(Math.random() * COLORS.length)],
+      tw: Math.random() * Math.PI * 2,
+      ts: Math.random() * .02 + .008
+    };
+  }
+  function init(){
+    resize();
+    particles = Array.from({length: COUNT}, createParticle);
+  }
+  function draw(){
+    if(!running) return;
+    ctx.clearRect(0, 0, w, h);
+    for(const p of particles){
+      p.x += p.vx; p.y += p.vy; p.tw += p.ts;
+      if(p.x < -20) p.x = w + 20;
+      if(p.x > w + 20) p.x = -20;
+      if(p.y < -20) p.y = h + 20;
+      if(p.y > h + 20) p.y = -20;
+
+      const alpha = p.a * (0.55 + 0.45 * Math.sin(p.tw));
+      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 7);
+      grd.addColorStop(0, `rgba(${p.c},${alpha})`);
+      grd.addColorStop(1, `rgba(${p.c},0)`);
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(${p.c},${Math.min(alpha * 1.6, 1)})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  init();
+  draw();
+
+  let rt;
+  window.addEventListener('resize', ()=>{ clearTimeout(rt); rt = setTimeout(init, 180); });
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden){ running = false; }
+    else if(!running){ running = true; draw(); }
+  });
+})();
+
+/* ---------- Glass spotlight (mengikuti kursor di card) ---------- */
+const mainContainer = document.getElementById('mainContainer');
+if(fine && mainContainer){
+  mainContainer.addEventListener('mousemove', e=>{
+    const r = mainContainer.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    mainContainer.style.setProperty('--mx', (px*100)+'%');
+    mainContainer.style.setProperty('--my', (py*100)+'%');
+  });
+}
+
+/* ---------- Spotlight pada option (mengikuti kursor) ---------- */
+if(fine){
+  document.addEventListener('mousemove', e=>{
+    const opt = e.target.closest && e.target.closest('.option');
+    if(!opt) return;
+    const r = opt.getBoundingClientRect();
+    opt.style.setProperty('--mx', (((e.clientX-r.left)/r.width)*100)+'%');
+    opt.style.setProperty('--my', (((e.clientY-r.top)/r.height)*100)+'%');
+  }, {passive:true});
+}
+
+/* ============================================================
+   LOGIKA APLIKASI (tidak berubah)
+   ============================================================ */
+const allQuestions = [
+  {
+    question: "Jika 2 orang membutuhkan 2 jam untuk menyelesaikan pekerjaan, berapa lama 4 orang membutuhkan untuk menyelesaikan pekerjaan yang sama?",
+    options: ["1 jam", "2 jam", "4 jam", "0.5 jam"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Dengan asumsi pekerjaan bisa dibagi rata, 4 orang akan menyelesaikan dalam setengah waktu dari 2 orang (1 jam)"
+  },
+  {
+    question: "Apa huruf berikutnya dalam deret: A, C, E, G, ...?",
+    options: ["H", "I", "J", "K"],
+    answer: 1,
+    difficulty: 1,
+    explanation: "Deret ini adalah huruf ganjil dalam alfabet (A=1, C=3, E=5, G=7, I=9)"
+  },
+  {
+    question: "Jika semua manusia adalah makhluk hidup dan semua makhluk hidup akan mati, maka:",
+    options: ["Semua manusia akan mati", "Beberapa manusia tidak akan mati", "Hanya makhluk hidup yang bukan manusia akan mati", "Tidak ada kesimpulan yang valid"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Ini adalah contoh silogisme klasik: Jika A=B dan B=C, maka A=C"
+  },
+  {
+    question: "Seorang ayah dan anak memiliki total usia 66 tahun. Ayah 30 tahun lebih tua dari anaknya. Berapa usia anaknya?",
+    options: ["18 tahun", "20 tahun", "22 tahun", "24 tahun"],
+    answer: 0,
+    difficulty: 3,
+    explanation: "Misal usia anak = x, maka x + (x+30) = 66 → 2x = 36 → x = 18"
+  },
+  {
+    question: "Jika sebuah jam menunjukkan pukul 3:15, berapa derajat sudut antara jarum jam dan jarum menit?",
+    options: ["0°", "7.5°", "15°", "30°"],
+    answer: 1,
+    difficulty: 3,
+    explanation: "Jarum jam bergerak 0.5° per menit. Pada 3:15, jarum jam sudah bergerak 7.5° dari posisi 3"
+  },
+  {
+    question: "Apa angka berikutnya dalam deret: 1, 1, 2, 3, 5, 8, ...?",
+    options: ["10", "11", "12", "13"],
+    answer: 3,
+    difficulty: 2,
+    explanation: "Ini adalah deret Fibonacci dimana setiap angka adalah jumlah dua angka sebelumnya"
+  },
+  {
+    question: "Jika 5 mesin membutuhkan 5 menit untuk membuat 5 widget, berapa lama 100 mesin membutuhkan untuk membuat 100 widget?",
+    options: ["5 menit", "100 menit", "1 menit", "50 menit"],
+    answer: 0,
+    difficulty: 3,
+    explanation: "Setiap mesin membutuhkan 5 menit untuk membuat 1 widget, jadi 100 mesin juga butuh 5 menit untuk membuat 100 widget"
+  },
+  {
+    question: "Manakah yang tidak termasuk dalam kelompok: Meja, Kursi, Lemari, Lantai?",
+    options: ["Meja", "Kursi", "Lemari", "Lantai"],
+    answer: 3,
+    difficulty: 1,
+    explanation: "Lantai bukan termasuk perabot furniture seperti tiga pilihan lainnya"
+  },
+  {
+    question: "Jika hari ini adalah hari Kamis, hari apa 72 hari dari sekarang?",
+    options: ["Jumat", "Sabtu", "Minggu", "Senin"],
+    answer: 1,
+    difficulty: 3,
+    explanation: "72 hari = 10 minggu + 2 hari. 10 minggu dari Kamis tetap Kamis, ditambah 2 hari menjadi Sabtu"
+  },
+  {
+    question: "Apa yang dimiliki oleh seorang pria dalam hidupnya yang lebih panjang daripada namanya?",
+    options: ["Umurnya", "Rambutnya", "Kariernya", "Pakaiannya"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Umur seseorang biasanya lebih panjang dari panjang namanya (dalam huruf)"
+  },
+  {
+    question: "Jika 1/4 dari suatu angka adalah 3, berapa 1/2 dari angka tersebut?",
+    options: ["6", "8", "12", "2"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Jika 1/4 x = 3, maka x = 12, dan 1/2 dari 12 adalah 6"
+  },
+  {
+    question: "Seorang pria membangun rumah persegi panjang dengan semua sisi menghadap ke selatan. Seekor beruang besar lewat di depan rumah. Berapa warna beruang itu?",
+    options: ["Hitam", "Putih", "Coklat", "Abu-abu"],
+    answer: 1,
+    difficulty: 3,
+    explanation: "Satu-satunya tempat di bumi di mana rumah bisa memiliki semua sisi menghadap selatan adalah Kutub Utara, dan beruang di sana adalah beruang kutub (putih)"
+  },
+  {
+    question: "Jika 3 orang dapat mengecat 3 pagar dalam 3 hari, berapa orang yang dibutuhkan untuk mengecat 6 pagar dalam 6 hari?",
+    options: ["3", "6", "9", "12"],
+    answer: 0,
+    difficulty: 3,
+    explanation: "1 orang bisa mengecat 1 pagar dalam 3 hari, jadi 3 orang bisa mengecat 6 pagar dalam 6 hari"
+  },
+  {
+    question: "Apa yang selalu naik tetapi tidak pernah turun?",
+    options: ["Suhu", "Harga", "Usia", "Pesawat"],
+    answer: 2,
+    difficulty: 1,
+    explanation: "Usia seseorang selalu bertambah dan tidak pernah berkurang"
+  },
+  {
+    question: "Jika semua Bloops adalah Razzies dan semua Razzies adalah Lazzies, maka semua Bloops pasti Lazzies?",
+    options: ["Benar", "Salah", "Tidak pasti", "Tergantung"],
+    answer: 0,
+    difficulty: 3,
+    explanation: "Ini adalah silogisme valid: Jika A=B dan B=C, maka A=C"
+  },
+  {
+    question: "Apa yang bisa Anda pegang tanpa pernah menyentuhnya?",
+    options: ["Napas", "Pikiran", "Percakapan", "Janji"],
+    answer: 2,
+    difficulty: 2,
+    explanation: "Anda bisa 'memegang' percakapan (melakukan percakapan) tanpa benar-benar menyentuhnya secara fisik"
+  },
+  {
+    question: "Jika Anda melempar dadu 6 sisi, berapa peluang mendapatkan angka genap?",
+    options: ["1/6", "1/3", "1/2", "2/3"],
+    answer: 2,
+    difficulty: 2,
+    explanation: "Angka genap pada dadu adalah 2, 4, dan 6 (3 dari 6 kemungkinan)"
+  },
+  {
+    question: "Manakah yang bukan termasuk dalam kelompok: Paris, London, Dublin, Roma?",
+    options: ["Paris", "London", "Dublin", "Roma"],
+    answer: 3,
+    difficulty: 2,
+    explanation: "Roma adalah ibu kota Italia, sementara yang lain adalah ibu kota negara yang menggunakan Euro sebagai mata uang"
+  },
+  {
+    question: "Apa yang penuh dengan lubang tetapi masih bisa menampung air?",
+    options: ["Spons", "Saringan", "Ember", "Jaring"],
+    answer: 0,
+    difficulty: 1,
+    explanation: "Spons memiliki banyak pori/lubang tetapi bisa menahan air"
+  },
+  {
+    question: "Berapa banyak sisi yang dimiliki oleh 3 kubus?",
+    options: ["12", "18", "20", "24"],
+    answer: 1,
+    difficulty: 2,
+    explanation: "Setiap kubus memiliki 6 sisi, 3 kubus terpisah memiliki total 18 sisi"
+  },
+  {
+    question: "Jika Anda mencampur warna merah dan biru, warna apa yang akan Anda dapatkan?",
+    options: ["Hijau", "Ungu", "Oranye", "Coklat"],
+    answer: 1,
+    difficulty: 1,
+    explanation: "Merah + Biru = Ungu dalam teori warna"
+  },
+  {
+    question: "Apa yang memiliki kota tetapi tidak ada rumah, memiliki hutan tetapi tidak ada pohon, dan memiliki sungai tetapi tidak ada air?",
+    options: ["Peta", "Mimpi", "Lukisan", "Buku"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Peta memiliki representasi kota, hutan, dan sungai tetapi bukan benda nyatanya"
+  },
+  {
+    question: "Jika 2 adalah 3, 3 adalah 5, 4 adalah 7, maka 5 adalah...?",
+    options: ["8", "9", "10", "11"],
+    answer: 1,
+    difficulty: 3,
+    explanation: "Pola: n adalah (n × 2) - 1. Jadi 5 adalah (5×2)-1 = 9"
+  },
+  {
+    question: "Apa yang bisa Anda bagi tanpa mengurangi?",
+    options: ["Kue", "Waktu", "Rumah", "Uang"],
+    answer: 2,
+    difficulty: 2,
+    explanation: "Anda bisa membagi rumah (berbagi tempat tinggal) tanpa mengurangi fisik rumah tersebut"
+  },
+  {
+    question: "Jika 3 apel berharga 45 sen, berapa harga 1 lusin apel?",
+    options: ["$1.80", "$2.70", "$3.60", "$4.50"],
+    answer: 0,
+    difficulty: 3,
+    explanation: "1 lusin = 12 apel. Jika 3 apel = 45 sen, maka 12 apel = 4 × 45 sen = 180 sen = $1.80"
+  },
+  {
+    question: "Apa yang dimulai dengan 'e', diakhiri dengan 'e', dan hanya berisi satu huruf?",
+    options: ["Envelope", "Eye", "Eve", "Eagle"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Kata 'envelope' dimulai dan diakhiri dengan 'e' dan berisi/mengandung 'satu huruf' (surat)"
+  },
+  {
+    question: "Jika Anda berlari lebih cepat dari orang di posisi kedua dalam perlombaan, di posisi berapa Anda sekarang?",
+    options: ["Pertama", "Kedua", "Ketiga", "Keempat"],
+    answer: 0,
+    difficulty: 1,
+    explanation: "Jika Anda mengalahkan orang di posisi kedua, Anda mengambil posisi mereka"
+  },
+  {
+    question: "Apa yang bisa Anda tangkap tetapi tidak bisa Anda lempar?",
+    options: ["Bola", "Pilek", "Pesawat", "Pelangi"],
+    answer: 1,
+    difficulty: 1,
+    explanation: "Anda bisa 'menangkap' pilek tetapi tidak bisa 'melempar' pilek"
+  },
+  {
+    question: "Jika 1=5, 2=15, 3=215, 4=3215, maka 5=?",
+    options: ["43215", "54321", "1", "52143"],
+    answer: 2,
+    difficulty: 3,
+    explanation: "Lihat pola pertama: 1=5, maka seharusnya 5=1"
+  },
+  {
+    question: "Apa yang semakin besar semakin banyak yang Anda ambil darinya?",
+    options: ["Lubang", "Kue", "Pohon", "Gunung"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Semakin banyak Anda menggali lubang, semakin besar lubang tersebut"
+  },
+  {
+    question: "Jika seekor sapi berdiri menghadap ke timur, ke mana ekornya menunjuk?",
+    options: ["Timur", "Barat", "Selatan", "Ke bawah"],
+    answer: 3,
+    difficulty: 1,
+    explanation: "Ekor sapi selalu mengarah ke bawah, terlepas dari arah badan sapi menghadap"
+  },
+  {
+    question: "Apa yang memiliki tangan tetapi tidak bisa bertepuk tangan?",
+    options: ["Jam", "Boneka", "Robot", "Pohon"],
+    answer: 0,
+    difficulty: 1,
+    explanation: "Jam memiliki jarum (tangan) tetapi tidak bisa bertepuk tangan"
+  },
+  {
+    question: "Apa yang selalu di depan Anda tetapi tidak pernah bisa dilihat?",
+    options: ["Masa depan", "Bayangan", "Cahaya", "Angin"],
+    answer: 0,
+    difficulty: 2,
+    explanation: "Masa depan selalu di depan kita tetapi tidak bisa dilihat"
+  },
+  {
+    question: "Jika Anda memilikinya, Anda ingin membaginya. Jika Anda membaginya, Anda tidak memilikinya. Apa itu?",
+    options: ["Kebahagiaan", "Rahasia", "Uang", "Makanan"],
+    answer: 1,
+    difficulty: 2,
+    explanation: "Jika Anda membagikan rahasia, Anda tidak lagi memilikinya sebagai rahasia"
+  },
+  {
+    question: "Apa yang bisa berjalan tetapi tidak pernah berjalan, memiliki mulut tetapi tidak pernah berbicara, memiliki kepala tetapi tidak pernah menangis?",
+    options: ["Sungai", "Pohon", "Jam", "Buku"],
+    answer: 0,
+    difficulty: 3,
+    explanation: "Sungai memiliki aliran (berjalan), muara (mulut), dan hulu (kepala)"
+  },
+  {
+    question: "Jika sebuah keluarga memiliki 5 anak dan masing-masing memiliki 1 saudara perempuan, berapa banyak anak perempuan dalam keluarga itu?",
+    options: ["1", "2", "5", "6"],
+    answer: 0,
+    difficulty: 3,
+    explanation: "Semua anak laki-laki merujuk pada saudara perempuan yang sama, jadi hanya ada 1 anak perempuan"
+  },
+  {
+    question: "Apa yang bisa Anda bagi tanpa mengurangi?",
+    options: ["Kue", "Waktu", "Rumah", "Uang"],
+    answer: 2,
+    difficulty: 2,
+    explanation: "Anda bisa membagi rumah (berbagi tempat tinggal) tanpa mengurangi fisik rumah tersebut"
+  },
+  {
+    question: "Jika Anda melempar batu ke laut merah, apa yang akan terjadi?",
+    options: ["Batu akan tenggelam", "Batu akan basah", "Batu akan mengambang", "Batu akan pecah"],
+    answer: 1,
+    difficulty: 1,
+    explanation: "Batu akan menjadi basah karena terkena air laut"
+  },
+  {
+    question: "Apa yang bisa Anda bagi tanpa mengurangi?",
+    options: ["Kue", "Waktu", "Rumah", "Uang"],
+    answer: 2,
+    difficulty: 2,
+    explanation: "Anda bisa membagi rumah (berbagi tempat tinggal) tanpa mengurangi fisik rumah tersebut"
+  }
+];
+
+/* ---------- Variabel aplikasi ---------- */
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+let startTime;
+let timerInterval;
+let userAnswers = [];
+let userName = "";
+let userAge = 0;
+let userGender = "";
+let finalIQ = 0;
+
+/* ---------- Elemen DOM ---------- */
+const introScreen = document.getElementById('introScreen');
+const questionScreen = document.getElementById('questionScreen');
+const resultScreen = document.getElementById('resultScreen');
+const answersScreen = document.getElementById('answersScreen');
+const startTestBtn = document.getElementById('startTest');
+const restartTestBtn = document.getElementById('restartTest');
+const viewAnswersBtn = document.getElementById('viewAnswers');
+const shareWhatsAppBtn = document.getElementById('shareWhatsApp');
+const shareStatusBtn = document.getElementById('shareStatus');
+const backToResultsBtn = document.getElementById('backToResults');
+const exitBtn = document.getElementById('exitBtn');
+const questionElement = document.getElementById('question');
+const optionsElement = document.getElementById('options');
+const progressBar = document.getElementById('progressBar');
+const timerElement = document.getElementById('timer');
+const iqScoreElement = document.getElementById('iqScore');
+const resultMessageElement = document.getElementById('resultMessage');
+const userDetailsElement = document.getElementById('userDetails');
+const timeTakenElement = document.getElementById('timeTaken');
+const ageAdjustedElement = document.getElementById('ageAdjusted');
+const genderRatioElement = document.getElementById('genderRatio');
+const characterElement = document.getElementById('character');
+const answersListElement = document.getElementById('answersList');
+const correctSound = document.getElementById('correctSound');
+const wrongSound = document.getElementById('wrongSound');
+const completionSound = document.getElementById('completionSound');
+const excellentSound = document.getElementById('excellentSound');
+const goodSound = document.getElementById('goodSound');
+const averageSound = document.getElementById('averageSound');
+
+/* ---------- Event listeners ---------- */
+startTestBtn.addEventListener('click', startTest);
+restartTestBtn.addEventListener('click', restartTest);
+viewAnswersBtn.addEventListener('click', showAnswers);
+shareWhatsAppBtn.addEventListener('click', shareToWhatsApp);
+shareStatusBtn.addEventListener('click', shareAsStatus);
+backToResultsBtn.addEventListener('click', backToResults);
+exitBtn.addEventListener('click', exitTest);
+
+/* ---------- Pilih 20 pertanyaan acak ---------- */
+function selectRandomQuestions() {
+    const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 20);
+}
+
+/* ---------- Mulai test ---------- */
+function startTest() {
+    userName = document.getElementById('name').value.trim();
+    userAge = parseInt(document.getElementById('age').value);
+    userGender = document.getElementById('gender').value;
+
+    if (!userName || isNaN(userAge) || userAge < 5 || userAge > 120) {
+        alert("Harap isi nama dan usia yang valid (5-120 tahun)");
+        return;
+    }
+
+    questions = selectRandomQuestions();
+    userAnswers = [];
+    score = 0;
+    currentQuestion = 0;
+
+    introScreen.classList.add('hidden');
+    questionScreen.classList.remove('hidden');
+
+    startTime = new Date();
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+
+    showQuestion();
+}
+
+/* ---------- Keluar ---------- */
+function exitTest() {
+    if (confirm("Apakah Anda yakin ingin keluar dari test?")) {
+        if (timerInterval) clearInterval(timerInterval);
+        restartTest();
+    }
+}
+
+/* ---------- Timer ---------- */
+function updateTimer() {
+    const now = new Date();
+    const elapsed = new Date(now - startTime);
+    const minutes = elapsed.getMinutes().toString().padStart(2, '0');
+    const seconds = elapsed.getSeconds().toString().padStart(2, '0');
+    timerElement.textContent = `${minutes}:${seconds}`;
+}
+
+/* ---------- Tampilkan pertanyaan ---------- */
+function showQuestion() {
+    const question = questions[currentQuestion];
+    questionElement.textContent = `Pertanyaan ${currentQuestion + 1}: ${question.question}`;
+
+    progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+
+    optionsElement.innerHTML = '';
+
+    question.options.forEach((option, index) => {
+        const optionElement = document.createElement('div');
+        optionElement.classList.add('option');
+        optionElement.textContent = option;
+        optionElement.addEventListener('click', () => selectAnswer(index));
+        optionsElement.appendChild(optionElement);
+    });
+}
+
+/* ---------- Pilih jawaban ---------- */
+function selectAnswer(answerIndex) {
+    const question = questions[currentQuestion];
+    const options = document.querySelectorAll('.option');
+
+    options.forEach(option => option.classList.remove('selected'));
+    options[answerIndex].classList.add('selected');
+
+    userAnswers[currentQuestion] = answerIndex;
+
+    setTimeout(() => {
+        if (answerIndex === question.answer) {
+            score += question.difficulty;
+            try { correctSound.play(); } catch(e) {}
+        } else {
+            try { wrongSound.play(); } catch(e) {}
+        }
+
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    }, 500);
+}
+
+/* ---------- Tampilkan hasil ---------- */
+function showResults() {
+    clearInterval(timerInterval);
+
+    const endTime = new Date();
+    const timeTaken = (endTime - startTime) / 1000;
+
+    let baseIQ = 100 + (score - 10) * 2;
+
+    let ageAdjustment = 0;
+    if (userAge < 18) {
+        ageAdjustment = 5 + (18 - userAge);
+    } else if (userAge > 50) {
+        ageAdjustment = (userAge - 50) * 0.2;
+    }
+
+    const genderRatio = userGender === 'male' ? "Laki-laki cenderung memiliki variasi skor yang lebih besar" :
+                       userGender === 'female' ? "Perempuan cenderung lebih konsisten dalam skor" :
+                       "Statistik gender tidak tersedia untuk kategori ini";
+
+    finalIQ = Math.round(baseIQ + ageAdjustment);
+    finalIQ = Math.max(50, Math.min(160, finalIQ));
+
+    let message = "";
+    let animation = "";
+    let sound = averageSound;
+
+    if (finalIQ >= 130) {
+        message = "Jenius! Skor Anda termasuk dalam 2% teratas.";
+        animation = "🧠";
+        sound = excellentSound;
+    } else if (finalIQ >= 120) {
+        message = "Sangat Unggul! Anda lebih pintar dari 90% populasi.";
+        animation = "🚀";
+        sound = goodSound;
+    } else if (finalIQ >= 110) {
+        message = "Di Atas Rata-rata! Kecerdasan Anda melebihi kebanyakan orang.";
+        animation = "🌟";
+        sound = goodSound;
+    } else if (finalIQ >= 90) {
+        message = "Rata-rata. Anda memiliki kecerdasan yang sama dengan kebanyakan orang.";
+        animation = "😊";
+        sound = averageSound;
+    } else {
+        message = "Di Bawah Rata-rata. Mungkin Anda perlu lebih banyak latihan.";
+        animation = "🤔";
+        sound = wrongSound;
+    }
+
+    questionScreen.classList.add('hidden');
+    resultScreen.classList.remove('hidden');
+
+    iqScoreElement.textContent = finalIQ;
+    resultMessageElement.textContent = message;
+    userDetailsElement.textContent = `Nama: ${userName}, Usia: ${userAge} tahun, Jenis Kelamin: ${document.getElementById('gender').options[document.getElementById('gender').selectedIndex].text}`;
+    timeTakenElement.textContent = `Waktu menyelesaikan test: ${Math.floor(timeTaken / 60)} menit ${Math.floor(timeTaken % 60)} detik`;
+    ageAdjustedElement.textContent = `Penyesuaian usia: ${ageAdjustment > 0 ? '+' : ''}${Math.round(ageAdjustment)} poin`;
+    genderRatioElement.textContent = genderRatio;
+    characterElement.textContent = animation;
+
+    try { completionSound.play(); } catch(e) {}
+    setTimeout(() => { try { sound.play(); } catch(e) {} }, 1000);
+
+    if (finalIQ >= 120) createConfetti();
+}
+
+/* ---------- Confetti ---------- */
+function createConfetti() {
+    const container = document.getElementById('resultAnimation');
+    const palette = ['#00eaff', '#ff2bd6', '#9d4bff', '#ffcc4d', '#ffffff'];
+
+    for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = (Math.random() * 30 - 10) + '%';
+        confetti.style.backgroundColor = palette[Math.floor(Math.random() * palette.length)];
+        confetti.style.boxShadow = `0 0 12px ${confetti.style.backgroundColor}`;
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        confetti.style.animationDelay = (Math.random() * .6) + 's';
+        confetti.style.borderRadius = Math.random() > .5 ? '2px' : '50%';
+        container.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 5000);
+    }
+}
+
+/* ---------- Tampilkan review jawaban ---------- */
+function showAnswers() {
+    resultScreen.classList.add('hidden');
+    answersScreen.classList.remove('hidden');
+
+    answersListElement.innerHTML = '';
+
+    questions.forEach((question, index) => {
+        const answerItem = document.createElement('div');
+        answerItem.classList.add('answer-item');
+
+        const userAnswerIndex = userAnswers[index];
+        const isCorrect = userAnswerIndex === question.answer;
+
+        answerItem.innerHTML = `
+            <div class="answer-question">${index + 1}. ${question.question}</div>
+            <div class="answer-user">Jawaban Anda: ${question.options[userAnswerIndex]} ${isCorrect ? '✅' : '❌'}</div>
+            <div class="answer-correct">Jawaban Benar: ${question.options[question.answer]}</div>
+            <div class="answer-explanation">Penjelasan: ${question.explanation}</div>
+        `;
+
+        answersListElement.appendChild(answerItem);
+    });
+}
+
+/* ---------- Kembali ke hasil ---------- */
+function backToResults() {
+    answersScreen.classList.add('hidden');
+    resultScreen.classList.remove('hidden');
+}
+
+/* ---------- Share WhatsApp ---------- */
+function shareToWhatsApp() {
+    const message = `Halo! Saya baru saja menyelesaikan Test IQ Logika dan mendapatkan skor ${finalIQ}!\n\n` +
+                   `Nama: ${userName}\n` +
+                   `Usia: ${userAge}\n` +
+                   `Waktu Pengerjaan: ${timerElement.textContent}\n\n` +
+                   `Coba test IQ Logika Anda juga di aplikasi ini!`;
+
+    const phoneNumber = '081399332296';
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+}
+
+/* ---------- Jadikan status WhatsApp ---------- */
+function shareAsStatus() {
+    const message = `Saya mendapatkan skor IQ ${finalIQ} pada Test IQ Logika! Coba test IQ Anda juga!`;
+    const url = `whatsapp://status?text=${encodeURIComponent(message)}`;
+
+    window.location.href = url;
+
+    setTimeout(() => {
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+    }, 500);
+}
+
+/* ---------- Reset test ---------- */
+function restartTest() {
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    questions = [];
+
+    answersScreen.classList.add('hidden');
+    resultScreen.classList.add('hidden');
+    questionScreen.classList.add('hidden');
+    introScreen.classList.remove('hidden');
+
+    document.getElementById('name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('gender').value = 'male';
+}
+
+/* ---------- Inisialisasi audio ---------- */
+function initAudio() {
+    const audioElements = [correctSound, wrongSound, completionSound, excellentSound, goodSound, averageSound];
+    audioElements.forEach(audio => {
+        audio.volume = 0.5;
+        try { audio.load(); } catch(e) {}
+    });
+}
+window.addEventListener('load', initAudio);
+</script>
+</body>
+</html>
