@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Berita Terkini - Orang Terkaya Nomor 2 Dunia 2026</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #1e2a3a;
+      line-height: 1.6;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(135deg, #0b1e33 0%, #1b3a5c 100%);
+      color: white;
+      padding: 0 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: #f5b342;
+    }
+
+    nav a {
+      color: #d0dbe8;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #f5b342;
+    }
+
+    /* ===== BREAKING NEWS ===== */
+    .breaking {
+      background: #c0392b;
+      color: white;
+      padding: 0.6rem 2rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      overflow: hidden;
+    }
+
+    .breaking-label {
+      background: #fff;
+      color: #c0392b;
+      padding: 0.15rem 0.6rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .container {
+      max-width: 1200px;
+      margin: 2.5rem auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== HERO / PROFILE CARD ===== */
+    .profile-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      margin-bottom: 3rem;
+    }
+
+    .profile-image {
+      background: #1e2a3a;
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-image .placeholder-text {
+      color: #7a8ba0;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 2rem;
+      position: absolute;
+      z-index: 1;
+    }
+
+    /* Jika gambar gagal dimuat, placeholder tetap terlihat */
+    .profile-image img:not([src]), 
+    .profile-image img[src=""] {
+      display: none;
+    }
+
+    .profile-image img[src=""] + .placeholder-text {
+      display: block;
+    }
+
+    .profile-detail {
+      padding: 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .rank-badge {
+      display: inline-block;
+      background: #f5b342;
+      color: #0b1e33;
+      font-weight: 800;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+      align-self: flex-start;
+    }
+
+    .profile-detail h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 0.4rem;
+      color: #0b1e33;
+    }
+
+    .profile-detail .subtitle {
+      font-size: 1.1rem;
+      color: #5a6b80;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .profile-detail .subtitle strong {
+      color: #1e2a3a;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .meta-item {
+      border-left: 3px solid #f5b342;
+      padding-left: 1rem;
+    }
+
+    .meta-item .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #8a9bb0;
+      font-weight: 600;
+    }
+
+    .meta-item .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0b1e33;
+    }
+
+    .wealth-highlight {
+      background: #f0f6ff;
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      align-self: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    .wealth-highlight .icon {
+      font-size: 1.8rem;
+    }
+
+    .wealth-highlight .amount {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #0b1e33;
+      line-height: 1.2;
+    }
+
+    .wealth-highlight .amount small {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #5a6b80;
+      display: block;
+    }
+
+    .profile-detail .desc {
+      color: #3d4f63;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-source {
+      display: inline-block;
+      background: #0b1e33;
+      color: white;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+
+    .btn-source:hover {
+      background: #1b3a5c;
+    }
+
+    /* ===== ARTIKEL LAINNYA ===== */
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #0b1e33;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 5px;
+      height: 28px;
+      background: #f5b342;
+      border-radius: 3px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+    }
+
+    .news-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      padding: 1.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+
+    .news-card .tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: #f5b342;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #0b1e33;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .news-card p {
+      font-size: 0.9rem;
+      color: #5a6b80;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0b1e33;
+      color: #8a9bb0;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      margin-top: 3rem;
+    }
+
+    footer strong {
+      color: #f5b342;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+      .profile-image {
+        min-height: 280px;
+      }
+      .profile-detail {
+        padding: 2rem 1.8rem;
+      }
+      .profile-detail h1 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 0 1rem;
+      }
+      .header-inner {
+        flex-direction: column;
+        height: auto;
+        padding: 0.8rem 0;
+        gap: 0.5rem;
+      }
+      nav a {
+        margin: 0 0.7rem;
+        font-size: 0.85rem;
+      }
+      .container {
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+      }
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .profile-detail h1 {
+        font-size: 1.7rem;
+      }
+      .wealth-highlight .amount {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">Berita<span>Global</span></div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Ekonomi</a>
+        <a href="#">Dunia</a>
+        <a href="#">Teknologi</a>
+        <a href="#">Kontak</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== BREAKING NEWS ===== -->
+  <div class="breaking">
+    <span class="breaking-label">Breaking</span>
+    <span>Forbes 2026: Larry Page Naik ke Posisi 2 Orang Terkaya Dunia dengan Kekayaan $257 Miliar</span>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="container">
+
+    <!-- PROFIL ORANG TERKAYA NOMOR 2 -->
+    <article class="profile-card">
+      <div class="profile-image">
+        <!-- GANTI URL DI BAWAH INI DENGAN FOTO YANG VALID -->
+        <img 
+          src="https://tarumjustice-dotcom.github.io/news/novy.jpeg" 
+          alt="Larry Page"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        >
+        <div class="placeholder-text" style="display:none;">
+          📷 Foto Larry Page<br><small style="font-size:0.8rem;">(Ganti dengan URL foto yang valid)</small>
+        </div>
+      </div>
+      <div class="profile-detail">
+        <span class="rank-badge">🏆 Peringkat #2 Dunia</span>
+        <h1>Larry Page</h1>
+        <p class="subtitle">Co-founder Google &amp; Alphabet Inc.</p>
+
+        <div class="wealth-highlight">
+          <span class="icon">💰</span>
+          <div>
+            <div class="amount">$257 Miliar <small>≈ Rp 4.100 Triliun</small></div>
+          </div>
+        </div>
+
+        <div class="meta-grid">
+          <div class="meta-item">
+            <div class="label">Negara</div>
+            <div class="value">🇺🇸 Amerika Serikat</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Sumber Kekayaan</div>
+            <div class="value">Alphabet Inc. (Google)</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Usia</div>
+            <div class="value">52 Tahun</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Peringkat</div>
+            <div class="value">#2 Global</div>
+          </div>
+        </div>
+
+        <p class="desc">
+          Larry Page kembali menempati posisi kedua dalam daftar Forbes Billionaires 2026. 
+          Kenaikan kekayaannya didorong oleh lonjakan harga saham Alphabet Inc. yang mendekati 
+          kapitalisasi pasar $4 triliun. Page, yang mendirikan Google bersama Sergey Brin pada 
+          1998, kini mengalihkan fokusnya ke proyek-proyek teknologi masa depan seperti 
+          kecerdasan buatan dan kendaraan otonom.
+        </p>
+
+        <a href="#" class="btn-source">Baca Selengkapnya →</a>
+      </div>
+    </article>
+
+    <!-- BERITA LAINNYA -->
+    <h2 class="section-title">Berita Terkait</h2>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="tag">Ekonomi</div>
+        <h3>Elon Musk Kembali Jadi Orang Terkaya Dunia 2026 dengan $839 Miliar</h3>
+        <p>CEO Tesla dan SpaceX ini berhasil mempertahankan posisinya selama dua tahun berturut-turut.</p>
+      </div>
+      <div class="news-card">
+        <div class="tag">Teknologi</div>
+        <h3>Sergey Brin di Posisi 3 dengan Kekayaan $237 Miliar</h3>
+        <p>Co-founder Google lainnya juga merasakan dampak positif dari kenaikan saham Alphabet.</p>
+      </div>
+      <div class="news-card">
+        <div class="tag">Dunia</div>
+        <h3>Daftar 10 Orang Terkaya Dunia 2026 Versi Forbes</h3>
+        <p>Dominasi tokoh teknologi masih sangat kuat dalam jajaran orang terkaya dunia tahun ini.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>&copy; 2026 <strong>BeritaGlobal</strong>. Semua hak dilindungi.</p>
+    <p style="margin-top:0.5rem;">Sumber data: Forbes Billionaires List 2026</p>
+  </footer>
+
+</body>
+</html>
